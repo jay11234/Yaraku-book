@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Exists;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Validator::extend('foreign_key', function ($attribute, $value, $parameters, $validator) {
+            $instance = is_string($parameters[0]) ? new $parameters[0] : $parameters[0];
+
+            return new Exists($instance->getTable(), $instance->getKeyName());
+        });
     }
 }
