@@ -16,7 +16,7 @@ class BookService
         'title' => 'required|string|max:100',
         'genre' => 'null|string|max:100',
         'author_id' => 'foreign_key:' . Author::class,
-        'published_year' => 'required|integer|digits:4|min:1800',
+        'year' => 'required|integer|digits:4|min:1800',
     ];
 
     public function validate($book)
@@ -57,7 +57,7 @@ class BookService
         $book->title = $req->input('title');
         $book->author_id = $req->input('author_id');
         $book->genre = $req->input('genre');
-        $book->published_year = $req->input('published_year');
+        $book->year = $req->input('year');
         $book->save();
         return $book;
     }
@@ -67,7 +67,7 @@ class BookService
         $book->title = $req->input('title');
         $book->author_id = $req->input('author_id');
         $book->genre = $req->input('genre');
-        $book->published_year = $req->input('published_year');
+        $book->year = $req->input('year');
         $book->save();
         return $book;
     }
