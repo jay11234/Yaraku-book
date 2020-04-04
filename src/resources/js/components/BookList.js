@@ -241,8 +241,6 @@ class BookList extends Component {
         let id = event.target.id;
 
         this.setState(prev => {
-            console.log([id]);
-            console.log(prev[id]);
             return {
                 [id]: !prev[id],
                 books: prev.books.sort((a, b) => {
