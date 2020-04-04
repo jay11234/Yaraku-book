@@ -12,7 +12,7 @@
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
         "axios": "^0.19",
-        "bootstrap": "^4.0.0",
+        "bootstrap": "^4.4.1",
         "browser-sync": "^2.26.7",
         "browser-sync-webpack-plugin": "^2.0.1",
         "cross-env": "^7.0",
@@ -27,8 +27,12 @@
         "sass-loader": "^8.0.0"
     },
     "dependencies": {
+        "file-saver": "^2.0.2",
+        "react-bootstrap": "^1.0.0",
+        "react-csv": "^2.0.3",
         "react-router-dom": "^5.1.2",
         "react-toastify": "^5.5.0",
-        "reactstrap": "^8.4.1"
+        "reactstrap": "^8.4.1",
+        "xlsx": "^0.15.6"
     }
 }
