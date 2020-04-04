@@ -28,13 +28,25 @@ toast.configure();
 const notifyYear = () => {
     toast.info("Follow the year format; ex 2020", {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000
+        autoClose: 2000
+    });
+};
+const notifyBookModel = () => {
+    toast.info("You need to fill all the required information", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
     });
 };
 const notifyAuthorName = () => {
     toast.info("You must type firstname, space and last name ", {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000
+        autoClose: 2000
+    });
+};
+const notifyAuthorModel = () => {
+    toast.info("First name and last name are required", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
     });
 };
 
@@ -63,7 +75,8 @@ class BookList extends Component {
                 first_name: "",
                 last_name: ""
             },
-            filter: ""
+            filter: "",
+            prev: []
         };
         this.myRef = React.createRef();
     }
@@ -106,7 +119,18 @@ class BookList extends Component {
     }
 
     addBook() {
-        if (this.state.newBookData.year)
+        if (
+            this.state.newBookData.title.length == 0 ||
+            this.state.newBookData.genre.length == 0
+        ) {
+            notifyBookModel();
+            return;
+        }
+        if (this.state.newBookData.year.length < 4) {
+            notifyYear();
+            return;
+        }
+        if (this.state.newBookData.year) {
             axios
                 .post("/api/v1/books", this.state.newBookData)
                 .then(response => {
@@ -126,6 +150,7 @@ class BookList extends Component {
                 .then(error => {
                     console.log(error);
                 });
+        }
     }
 
     // Author Crud Operations
@@ -171,6 +196,13 @@ class BookList extends Component {
     }
 
     addAuthor() {
+        if (
+            this.state.newAuthorData.first_name.length == 0 ||
+            this.state.newAuthorData.last_name.length == 0
+        ) {
+            notifyAuthorModel();
+            return;
+        }
         axios
             .post("/api/v1/authors", this.state.newAuthorData)
             .then(response => {
@@ -207,12 +239,24 @@ class BookList extends Component {
 
     handleSort(event) {
         let id = event.target.id;
+
         this.setState(prev => {
+            console.log([id]);
+            console.log(prev[id]);
             return {
                 [id]: !prev[id],
-                books: prev.books.sort((a, b) =>
-                    prev[id] ? a[id] < b[id] : a[id] > b[id]
-                )
+                books: prev.books.sort((a, b) => {
+                    if (prev[id]) {
+                        if (a[id] < b[id]) return 1;
+                        else if (a[id] > b[id]) return -1;
+                        return 0;
+                    } else {
+                        if (a[id] < b[id]) return -1;
+                        else if (a[id] > b[id]) return 1;
+                        return 0;
+                    }
+                    // prev[id] ? a[id] < b[id] : a[id] > b[id]
+                })
             };
         });
     }
@@ -337,6 +381,7 @@ class BookList extends Component {
                                     <FormGroup>
                                         <Label for="title">Title</Label>
                                         <Input
+                                            required
                                             value={this.state.newBookData.title}
                                             onChange={e => {
                                                 let {
@@ -356,6 +401,7 @@ class BookList extends Component {
                                     <FormGroup>
                                         <Label for="year">Year</Label>
                                         <Input
+                                            required
                                             value={this.state.newBookData.year}
                                             onChange={e => {
                                                 let {
@@ -374,6 +420,7 @@ class BookList extends Component {
                                     <FormGroup>
                                         <Label for="genre">Genre</Label>
                                         <Input
+                                            required
                                             value={this.state.newBookData.genre}
                                             onChange={e => {
                                                 let {
@@ -426,6 +473,7 @@ class BookList extends Component {
                                             First Name
                                         </Label>
                                         <Input
+                                            required
                                             value={
                                                 this.state.newAuthorModal
                                                     .first_name
@@ -449,6 +497,7 @@ class BookList extends Component {
                                     <FormGroup>
                                         <Label for="last_name">Last Name</Label>
                                         <Input
+                                            required
                                             value={
                                                 this.state.newAuthorModal
                                                     .last_name
@@ -505,6 +554,7 @@ class BookList extends Component {
                                             First Name
                                         </Label>
                                         <Input
+                                            required
                                             value={
                                                 this.state.editAuthorData
                                                     .first_name
@@ -528,6 +578,7 @@ class BookList extends Component {
                                     <FormGroup>
                                         <Label for="last_name">Last Name</Label>
                                         <Input
+                                            required
                                             value={
                                                 this.state.editAuthorData
                                                     .last_name
