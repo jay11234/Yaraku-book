@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Book;
 use App\Author;
 use Illuminate\Auth\Events\Validated;
+ 
 
 
 class BookService
@@ -14,9 +15,9 @@ class BookService
     #first)name, last_name, 
     protected $rules = [
         'title' => 'required|string|max:100',
-        'genre' => 'null|string|max:100',
+        'genre' => 'nullable|string|max:100',
         'author_id' => 'foreign_key:' . Author::class,
-        'year' => 'required|integer|digits:4|min:1800',
+        'year' => 'required|digits:4',
     ];
 
     public function validate($book)
