@@ -23,6 +23,6 @@ use function Ramsey\Uuid\v1;
 // });
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::resource('/books', BookController::class)->except(['create', 'edit']);
-    Route::resource('/authors', AuthorController::class)->except(['create', 'edit']);
+    Route::resource('/books', 'v1\BookController')->except(['create', 'edit']);
+    Route::resource('/authors', 'v1\AuthorController')->except(['create', 'edit']);
 });
