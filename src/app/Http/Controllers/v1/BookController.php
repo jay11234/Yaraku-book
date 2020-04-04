@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\v1\BookService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
+use Validator;
 
 class BookController extends Controller
 {
