@@ -13,6 +13,14 @@ root
   |-- README.md  // The file having all sorts of information as to this project. 
 ```
 
+## how to start
+
+- change the 'env.example' file to 'env' and change accordingly or copy the env file to 'env'
+- start running php server by typing 'php artisan serve'.
+- run npm by typeing 'npm run dev' or 'npm run watch'
+- go to 'localhost:3000/home' depending on the port you have set
+
+
 ## Tech stack
 
 ### Database
